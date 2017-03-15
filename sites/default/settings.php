@@ -20,7 +20,7 @@ if (file_exists($local_settings)) {
   include $local_settings;
 }
 else {
-  include __DIR__ . "/settings.pantheon.php";
+  include __DIR__ . "/settings.hosting.php";
 }
 
 $config_directories['sync'] = './sites/default/config/sync';
