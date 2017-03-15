@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * minka_ui
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function minka_ui_theme() {
+  return [
+    'minka_ui_banner' => [
+      'template' => 'banner',
+      'variables' => [],
+    ],
+  ];
+}

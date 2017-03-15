@@ -1,0 +1,10 @@
+uuid: 72ed9b3b-5e97-4318-b531-a67ed9dc8947
+langcode: pt-br
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dFZsD8spEeB91FWFB8R5oZbsZAJChkS5Dg5diyUTH2Y
+id: dislike
+label: 'Dislike vote'
+value_type: points
+description: 'A dislike vote, for negative reviews.'

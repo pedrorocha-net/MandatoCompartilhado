@@ -1,0 +1,35 @@
+<section class="container">
+  <div class="row">
+    <div class="text col-md-8">
+      <p>Participe do co-mandato<br/>comentando nas propostas!</p>
+
+      {% if logged_in %}
+        <p>
+          <a class="btn btn-primary btn-lg"
+             href="{{ path('node.add', {node_type: 'idea'}) }}">
+            Envie uma proposta
+          </a>
+        </p>
+      {% else %}
+        <p>
+          <a href="{{ path('user.login') }}">Faça login</a>
+          e envie a sua proposta.
+        </p>
+      {% endif %}
+
+    </div>
+
+    <div class="fb-box-plugin col-md-4">
+      <div class="fb-page"
+           data-href="https://www.facebook.com/micaelamarante50444"
+           data-width="300px" data-small-header="false"
+           data-adapt-container-width="false" data-hide-cover="false"
+           data-show-facepile="true">
+        <blockquote cite="https://www.facebook.com/micaelamarante50444"
+                    class="fb-xfbml-parse-ignore"><a
+              href="https://www.facebook.com/micaelamarante50444">Micael
+            Amarante</a></blockquote>
+      </div>
+    </div>
+  </div>
+</section>

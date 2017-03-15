@@ -1,0 +1,51 @@
+.form-group.form-autocomplete .form-control {
+  float: left;
+  width: 95%;
+}
+
+.tabledrag-toggle-weight,
+.filter-wrapper {
+  display: none;
+}
+
+.form-group {
+  margin: 10px 0 0 0;
+
+  .field-label,
+  label.control-label {
+    margin-top: 0;
+    font-size: 1em;
+  }
+  input[type=file] {
+    opacity: 1;
+    position: inherit;
+  }
+}
+
+#edit-field-images {
+  box-shadow: none;
+
+  .panel-body {
+    padding: 0;
+  }
+  thead {
+    display: none;
+  }
+  .draggable {
+    td {
+      vertical-align: middle;
+    }
+  }
+  .tabledrag-handle {
+    margin: -5px 0 0 0px;
+  }
+  .form-type-managed-file {
+    margin: 0 0 0 15px;
+  }
+}
+
+.form--inline {
+  .form-item {
+    margin-top: 0;
+  }
+}

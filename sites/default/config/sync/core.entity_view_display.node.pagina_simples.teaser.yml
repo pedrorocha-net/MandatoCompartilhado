@@ -1,0 +1,27 @@
+uuid: ab312654-2048-450e-baed-a749557d844e
+langcode: pt-br
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pagina_simples.body
+    - node.type.pagina_simples
+  module:
+    - text
+    - user
+id: node.pagina_simples.teaser
+targetEntityType: node
+bundle: pagina_simples
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden:
+  langcode: true

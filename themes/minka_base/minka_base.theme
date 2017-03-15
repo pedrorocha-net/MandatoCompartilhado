@@ -1,0 +1,50 @@
+<?php
+/**
+ * Implements hook_preprocess_page() for PAGE document templates.
+ */
+function minka_base_preprocess_html(&$variables) {
+  $link_color = '#039'; // Default
+  $link_color = '#20a74d';
+  $link_hover_color = '#036'; // Default
+  $link_hover_color = '#e7543f';
+  $menu_bg_color = '#039'; // Default
+  $menu_bg_color = '#FFF';
+  $actions_bg_color = '#039'; // Default
+  $actions_bg_color = '#e9c75a';
+  $menu_link_color = '#fff'; // Default
+  $menu_link_color = '#20a74d';
+  $menu_link_hover_color = '#999'; // Default
+  $menu_link_hover_color = '#e7543f';
+
+  $variables['themeSettings'] = [];
+  $variables['themeSettings']['link_color'] = $link_color;
+  $variables['themeSettings']['link_hover_color'] = $link_hover_color;
+  $variables['themeSettings']['menu_bg_color'] = $menu_bg_color;
+  $variables['themeSettings']['actions_bg_color'] = $actions_bg_color;
+  $variables['themeSettings']['menu_link_color'] = $menu_link_color;
+  $variables['themeSettings']['menu_link_hover_color'] = $menu_link_hover_color;
+}
+
+function minka_base_preprocess_node(&$variables) {
+  /** @var \Drupal\node\Entity\Node $Node * */
+
+  $Node = $variables['node'];
+  switch ($Node->bundle()) {
+    case 'idea':
+      switch ($variables['view_mode']) {
+        case 'fb_instant_articles_rss':
+          $variables['options']['author'] = 'Mandato Compartilhado';
+          $variables['content']['created'] = $Node->getCreatedTime();
+          $variables['content']['modified'] = $Node->getChangedTime();
+
+          $image = $Node->get('field_image')->entity;
+          $variables['content']['field_image'] = $image ? $image->url() : FALSE;
+
+          break;
+      }
+  }
+}
+
+function minka_base_preprocess_username(&$variables) {
+  $variables['attributes']['class'] = ['author'];
+}

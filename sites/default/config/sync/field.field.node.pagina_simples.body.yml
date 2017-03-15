@@ -1,0 +1,22 @@
+uuid: 57dcd7e1-e622-4873-a583-09066beee0ed
+langcode: pt-br
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.pagina_simples
+  module:
+    - text
+id: node.pagina_simples.body
+field_name: body
+entity_type: node
+bundle: pagina_simples
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: text_with_summary

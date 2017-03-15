@@ -1,0 +1,61 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display an item in a views FIA (facebook instant articles) feed.
+ *
+ * Available variables:
+ * - options.title: RSS item title.
+ * - options.subtitle: RSS item subtitle.
+ * - options.kicker : teaser short text for the article
+ * - options.created : created datetime
+ * - options.modified : modified datetime
+ * - options.link: RSS item link.
+ * - options.figure: a full html markup for a header image (syntax below)
+ * - options.authors : htmls <address> tags for article authors (syntax below)
+ *
+ * - content : HTML content for the article
+ *
+ * - footer : HTML content for the article footer
+ *
+ * The syntax for the figure allows:
+ *   <figure>
+ *       <img src="http://mydomain.com/path/to/img.jpg" />
+ *       <figcaption>This image is amazing</figcaption>
+ *   </figure>
+ *
+ * The Syntac for the author <address>:
+ *      <address>
+ *       <a rel="facebook" href="http://facebook.com/brandon.diamond">Brandon Diamond</a>
+ *       Brandon is a avid zombie hunter.
+ *     </address>
+ *     <address>
+ *       <a>TR Vishwanath</a>
+ *       Vish is a scholar and a gentleman.
+ *     </address>
+ *
+ * datetime="2014-11-11T04:44:16Z">November 11th, 4:44 PM
+ *
+ * @see template_preprocess_views_view_row_rss()
+ *
+ * @ingroup themeable
+ */
+#}
+<item>
+  <title>{{ options.title }}</title>
+  <link rel="canonical">{{ options.link.url }}</link>
+  <guid>{{ options.guid }}</guid>
+  <pubDate>{{ options.created|date("Y-d-m\TH:i:s\Z") }}</pubDate>
+  <author>{{ options.author }}</author>
+  <description>{{ options.kicker }}</description>
+  <content:encoded>
+    <![CDATA[
+    <article>
+
+      <!-- Article body started -->
+      {{ row }}
+      <!-- Article body finished -->
+
+    </article>
+    ]]>
+  </content:encoded>
+</item>

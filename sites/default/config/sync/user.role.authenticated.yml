@@ -1,0 +1,27 @@
+uuid: 2a54d4d1-4c67-44d7-bcde-a444637d3dcf
+langcode: pt-br
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  0: 'access content'
+  1: 'use text format basic_html'
+  2: 'access comments'
+  3: 'post comments'
+  4: 'skip comment approval'
+  5: 'access site-wide contact form'
+  6: 'access shortcuts'
+  7: 'search content'
+  8: 'create idea content'
+  9: 'edit own idea content'
+  10: 'view idea revisions'
+  11: 'view post access counter'
+  13: 'cancel account'
+  14: 'change own username'
+  15: 'add or remove like votes on comment'
+  16: 'add or remove like votes on node'

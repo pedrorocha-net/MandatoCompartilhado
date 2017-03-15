@@ -1,0 +1,35 @@
+uuid: 2e89959d-95c9-4370-8b94-83c7b2bc859b
+langcode: pt-br
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.idea.body
+    - field.field.node.idea.comment
+    - field.field.node.idea.field_category
+    - field.field.node.idea.field_images
+    - field.field.node.idea.field_tags
+    - node.type.idea
+  module:
+    - text
+    - user
+id: node.idea.teaser
+targetEntityType: node
+bundle: idea
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden:
+  comment: true
+  field_category: true
+  field_images: true
+  field_tags: true
+  langcode: true

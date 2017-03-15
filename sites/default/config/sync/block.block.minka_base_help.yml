@@ -1,0 +1,22 @@
+uuid: be8feedb-73ff-453a-937a-d700510db79c
+langcode: pt-br
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - minka_base
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: minka_base_help
+theme: minka_base
+region: content
+weight: -7
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Ajuda
+  provider: help
+  label_display: '0'
+visibility: {  }

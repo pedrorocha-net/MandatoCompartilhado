@@ -1,0 +1,30 @@
+uuid: cb0caa33-c886-4b7b-9795-4a73707156ac
+langcode: pt-br
+status: false
+dependencies:
+  config:
+    - views.view.category_menu
+  module:
+    - system
+    - views
+  theme:
+    - minka_base
+id: minka_base_views_block__category_menu_block_1
+theme: minka_base
+region: '-1'
+weight: -7
+provider: null
+plugin: 'views_block:category_menu-block_1'
+settings:
+  id: 'views_block:category_menu-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: true
+    context_mapping: {  }

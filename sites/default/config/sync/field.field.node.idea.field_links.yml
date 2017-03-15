@@ -1,0 +1,23 @@
+uuid: 00e6e610-be8f-433e-8345-0547ae0ed656
+langcode: pt-br
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_links
+    - node.type.idea
+  module:
+    - link
+id: node.idea.field_links
+field_name: field_links
+entity_type: node
+bundle: idea
+label: Links
+description: 'Sabe de links úteis para ajudar a entender essa ideia? Coloque aqui!'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 0
+field_type: link

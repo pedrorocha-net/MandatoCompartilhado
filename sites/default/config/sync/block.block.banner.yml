@@ -1,0 +1,25 @@
+uuid: a9b5f051-f47f-4417-9a66-91625f92df67
+langcode: pt-br
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:0db26459-a984-4fee-9e70-81b02feb5658'
+  module:
+    - block_content
+  theme:
+    - minka_base
+id: banner
+theme: minka_base
+region: header
+weight: null
+provider: null
+plugin: 'block_content:0db26459-a984-4fee-9e70-81b02feb5658'
+settings:
+  id: 'block_content:0db26459-a984-4fee-9e70-81b02feb5658'
+  label: Banner
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

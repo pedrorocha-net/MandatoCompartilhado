@@ -1,0 +1,11 @@
+uuid: 25b6d303-2ebf-40c7-a9a1-2113daf82e97
+langcode: pt-br
+status: true
+dependencies:
+  config:
+    - node.type.idea
+id: node.idea
+target_entity_type_id: node
+target_bundle: idea
+default_langcode: site_default
+language_alterable: false

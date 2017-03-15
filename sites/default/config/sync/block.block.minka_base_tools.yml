@@ -1,0 +1,26 @@
+uuid: f7f0ba30-eb7f-426f-8c4b-9fa71bcd6b28
+langcode: pt-br
+status: false
+dependencies:
+  config:
+    - system.menu.tools
+  module:
+    - system
+  theme:
+    - minka_base
+_core:
+  default_config_hash: NeHSoqm4XFqA7_0bDmR429ZZQt3LRbZMNRJTMsFyOfI
+id: minka_base_tools
+theme: minka_base
+region: '-1'
+weight: -5
+provider: null
+plugin: 'system_menu_block:tools'
+settings:
+  id: 'system_menu_block:tools'
+  label: Ferramentas
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 65d49be6-ea2a-44eb-8937-f43bb20ed7b1
+langcode: pt-br
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - minka_base
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: minka_base_messages
+theme: minka_base
+region: highlighted
+weight: -7
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Mensagens de status'
+  provider: system
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,23 @@
+#secondary {
+  @extend .col-sm-3;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #F8F8F8;
+  box-shadow: none;
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  > nav {
+    li {
+      a {
+        padding-left: 0;
+
+        &:hover {
+          background: none;
+        }
+      }
+    }
+  }
+}

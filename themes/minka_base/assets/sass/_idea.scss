@@ -1,0 +1,253 @@
+body.page-node-type-idea {
+  article.idea {
+    .content {
+      h1 {
+        font-size: 2em;
+      }
+      .field--name-field-images {
+        @include make-row();
+        .field--item {
+          @extend .col-md-3;
+          padding: 0px 5px 10px;
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .comentarios {
+      margin-top: 20px;
+    }
+  }
+
+  aside {
+    @extend .col-md-4;
+    .field--name-field-category {
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      background-color: $amarelo;
+      color: #ffffff;
+      padding: 10px;
+      font-size: 1.2em;
+      margin: 10px 0;
+
+      span {
+        margin: 0 10px;
+      }
+    }
+
+    .field--name-field-tags {
+      background-color: $cinza-escuro;
+      border-radius: 5px;
+      color: #ffffff;
+      margin: 10px 0;
+      padding: 10px;
+      span.tags {
+        text-transform: capitalize;
+        font-weight: bold;
+      }
+      .field--item {
+        display: inline-block;
+        a {
+          color: #ffffff;
+        }
+      }
+    }
+
+  }
+}
+
+$idea-thumb: 248px;
+$idea-thumb-xs: 316px;
+$idea-thumb-xs-no-image: 200px;
+
+article.idea {
+  &.teaser {
+    height: $idea-thumb;
+    @include respond-to('xs') {
+      height: $idea-thumb-xs;
+    }
+    margin-bottom: 30px;
+
+    .fb-like.fb_iframe_widget {
+      bottom: 15px;
+      left: 0;
+      right: 0;
+      position: absolute;
+      text-align: center;
+    }
+    h2 {
+      height: 100%;
+      margin: 0;
+      font-size: 1.5em;
+      text-align: center;
+      line-height: 1.2;
+
+      a {
+        display: block;
+        height: 100%;
+      }
+    }
+    footer {
+      padding: 15px;
+      height: 100%;
+      width: 100%;
+      //border: 1px solid #f0f0f0;
+
+      &:hover {
+        border-color: #000;
+      }
+    }
+    &.no-image {
+      @include respond-to('xs') {
+        height: $idea-thumb-xs-no-image;
+      }
+    }
+    &.has-image {
+      position: relative;
+
+      .meta,
+      h2 {
+        display: none;
+
+        a {
+          color: #fff;
+        }
+      }
+      footer {
+        position: absolute;
+        top: 0;
+        width: $idea-thumb;
+        @include respond-to('xs') {
+          width: $idea-thumb-xs;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, .8);
+          h2 {
+            height: 100%;
+          }
+          .meta,
+          h2 {
+            display: block;
+          }
+          .meta {
+            color: #fff;
+          }
+        }
+      }
+    }
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    .meta {
+      text-align: center;
+      margin-top: 10px;
+
+      .comment,
+      .vote {
+        display: inline-block;
+        span {
+          display: inline-block;
+          float: left;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  &.full {
+    .fb-like.fb_iframe_widget {
+      margin: 15px 0;
+      display: block;
+    }
+    section {
+      .indented {
+        margin-left: 3em;
+      }
+    }
+  }
+}
+
+article.idea article.comment {
+  @extend .clearfix;
+  margin-bottom: 20px;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  ul.links.inline {
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 2px 10px;
+      background: #ccc;
+      color: #fff;
+    }
+    &.list-inline {
+      display: none;
+    }
+  }
+}
+
+.views-element-container.form-group {
+  margin: 0;
+}
+
+.view-ideas {
+
+  .view-filters {
+    margin: 0;
+  }
+  .views-exposed-form {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 15px;
+
+    .form-inline {
+      .form-item {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      .form-group {
+        padding-bottom: 0;
+
+        label.control-label {
+          display: block;
+          margin-top: 0;
+          font-size: 0.9em;
+        }
+        input,
+        select {
+          margin-bottom: 0;
+        }
+      }
+      .form-actions {
+        margin: 0 10px 0;
+
+        button {
+          margin: 0;
+        }
+      }
+    }
+    @include respond-to('less-md') {
+      text-align: center;
+
+      .field-label,
+      label.control-label {
+        font-size: 1.2em;
+        text-transform: uppercase;
+      }
+      .form-control {
+        width: 100%;
+      }
+    }
+  }
+}

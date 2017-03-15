@@ -1,0 +1,22 @@
+uuid: b2abf8e5-fb9d-48f6-a62d-d1784841752d
+langcode: pt-br
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - minka_base
+_core:
+  default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
+id: minka_base_powered
+theme: minka_base
+region: '-1'
+weight: -7
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Desenvolvido com Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

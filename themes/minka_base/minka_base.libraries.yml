@@ -1,0 +1,23 @@
+global-styling:
+  css:
+    theme:
+      assets/css/style.css: {}
+  js:
+    assets/js/app.js: {}
+
+tether-scripts:
+  css:
+    theme:
+      assets/lib/tether/dist/css/tether.min.css: {}
+  js:
+    assets/lib/tether/dist/js/tether.min.js: {}
+bootstrap-scripts:
+  css:
+    theme:
+      assets/lib/bootstrap-material-design/dist/bootstrap-material-design.css: {}
+      assets/lib/jquery-colorbox/example1/colorbox.css: {}
+  js:
+    assets/lib/bootstrap/dist/js/bootstrap.min.js: {}
+    assets/lib/bootstrap-material-design/dist/bootstrap-material-design.iife.js: {}
+    assets/lib/bootstrap-material-design/dist/bootstrap-material-design.umd.js: {}
+    assets/lib/jquery-colorbox/jquery.colorbox-min.js: {}

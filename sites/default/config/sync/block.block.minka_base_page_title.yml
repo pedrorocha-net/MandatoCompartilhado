@@ -1,0 +1,29 @@
+uuid: 299a4954-c7c4-4727-9348-923db28d1eaa
+langcode: pt-br
+status: true
+dependencies:
+  module:
+    - ctools
+  theme:
+    - minka_base
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: minka_base_page_title
+theme: minka_base
+region: content
+weight: -7
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Título da página'
+  provider: core
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      idea: idea
+    negate: true
+    context_mapping:
+      node: '@node.node_route_context:node'

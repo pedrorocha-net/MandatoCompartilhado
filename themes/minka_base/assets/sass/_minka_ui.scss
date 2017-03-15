@@ -1,0 +1,32 @@
+#block-minkabanner {
+  background-color: #e9c75a;
+
+  section {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .text {
+    color: #FFF;
+    font-family: 'Nexa Heavy';
+    font-size: 2em;
+    text-transform: uppercase;
+
+    @include respond-to('less-sm') {
+      text-align: center;
+      font-size: 1.2em;
+      padding: 10px;
+    }
+  }
+  .fb-box-plugin {
+    @include respond-to('less-sm') {
+      text-align: center;
+      left: 0;
+      right: 0;
+      //top: 150px;
+    }
+    @include media-breakpoint-up(md) {
+      text-align: right;
+    }
+  }
+}

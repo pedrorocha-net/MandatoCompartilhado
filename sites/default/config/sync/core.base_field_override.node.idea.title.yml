@@ -1,0 +1,18 @@
+uuid: 809bef63-408e-479e-98ab-c4b80be89832
+langcode: pt-br
+status: true
+dependencies:
+  config:
+    - node.type.idea
+id: node.idea.title
+field_name: title
+entity_type: node
+bundle: idea
+label: Title
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

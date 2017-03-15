@@ -1,0 +1,11 @@
+uuid: a32f7c1f-5c60-44ed-8bfc-ce0ccc2a3bd2
+langcode: pt-br
+status: true
+dependencies:
+  config:
+    - node.type.pagina_simples
+id: node.pagina_simples
+target_entity_type_id: node
+target_bundle: pagina_simples
+default_langcode: site_default
+language_alterable: false

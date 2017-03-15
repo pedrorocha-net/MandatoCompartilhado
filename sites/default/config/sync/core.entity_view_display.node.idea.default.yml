@@ -1,0 +1,75 @@
+uuid: 20991158-8a41-426d-85d5-50b7c602a2ac
+langcode: pt-br
+status: true
+dependencies:
+  config:
+    - field.field.node.idea.body
+    - field.field.node.idea.comment
+    - field.field.node.idea.field_category
+    - field.field.node.idea.field_images
+    - field.field.node.idea.field_links
+    - field.field.node.idea.field_tags
+    - node.type.idea
+  module:
+    - comment
+    - image
+    - link
+    - text
+    - user
+id: node.idea.default
+targetEntityType: node
+bundle: idea
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+  comment:
+    weight: 5
+    label: above
+    settings:
+      pager_id: 0
+    third_party_settings: {  }
+    type: comment_default
+  field_category:
+    weight: 1
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_images:
+    weight: 4
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+  field_links:
+    weight: 6
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+  field_tags:
+    weight: 2
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+  links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

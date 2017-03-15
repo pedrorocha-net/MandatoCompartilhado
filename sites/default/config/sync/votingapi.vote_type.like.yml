@@ -1,0 +1,10 @@
+uuid: 3010afe7-1d57-4ea2-98eb-f0622736e398
+langcode: pt-br
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: oKP6xJfz_KdKHl2d1P1IXqHdR4d2O-S1QrcntvTEMJ0
+id: like
+label: 'Like vote'
+value_type: points
+description: 'A like vote, for positive reviews.'

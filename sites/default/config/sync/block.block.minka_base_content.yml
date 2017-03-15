@@ -1,0 +1,22 @@
+uuid: b689e1bc-4be9-458e-853a-41019195ed97
+langcode: pt-br
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - minka_base
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: minka_base_content
+theme: minka_base
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Conteúdo da página principal'
+  provider: system
+  label_display: '0'
+visibility: {  }

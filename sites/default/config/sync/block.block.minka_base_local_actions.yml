@@ -1,0 +1,20 @@
+uuid: 474bd36c-ea0e-442e-a23a-779ff9fa4e4c
+langcode: pt-br
+status: true
+dependencies:
+  theme:
+    - minka_base
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: minka_base_local_actions
+theme: minka_base
+region: content
+weight: -7
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

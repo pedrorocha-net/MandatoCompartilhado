@@ -1,0 +1,29 @@
+favicon:
+  mimetype: image/vnd.microsoft.icon
+  path: ''
+  url: 'http://dev-minka.pantheonsite.io/themes/minka_base/favicon.ico'
+  use_default: 0
+schemas:
+  bootstrap: 8000
+  minka_base: 8000
+features:
+  comment_user_picture: 1
+  comment_user_verification: 1
+  favicon: 0
+  node_user_picture: 1
+logo:
+  path: 'public://logo_micael.png'
+  url: ''
+  use_default: 0
+table_responsive: '-1'
+table: ''
+region_wells:
+  navigation: ''
+  navigation_collapsible: ''
+  header: ''
+  highlighted: ''
+  help: ''
+  content: ''
+  sidebar_first: ''
+  sidebar_second: 'well well-lg'
+  footer: ''

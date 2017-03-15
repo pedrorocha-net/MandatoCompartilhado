@@ -1,0 +1,109 @@
+body > header {
+  padding: 5px 0;
+}
+
+#navbar {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0 15px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  .navbar-nav {
+    > li {
+      > a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      &.active {
+        a {
+          background-color: #f3f3f3;
+          color: #20a74d;
+        }
+      }
+    }
+  }
+  .logo {
+    margin: 0;
+    @include respond-to('less-md') {
+      margin: 8px 0 0 8px;
+    }
+
+    img {
+      height: 35px;
+    }
+  }
+  button.navbar-toggle {
+    background-color: #ccc;
+  }
+}
+
+#block-minka-base-main-menu {
+  .menu {
+    @include media-breakpoint-up(md) {
+      margin-left: 20px;
+    }
+  }
+}
+
+.wrapper {
+  > .header {
+    min-height: 0;
+  }
+}
+
+h1 {
+  font-size: 2.2em;
+  border: 0;
+  @include respond-to('less-sm') {
+    text-align: center;
+  }
+}
+
+.main-container {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#main-content {
+  padding-top: 15px;
+}
+
+.path-frontpage {
+  #main-content {
+    padding-top: 0;
+  }
+}
+
+.well {
+  border-radius: 0;
+  border: 0;
+}
+
+.nav-tabs,
+.card {
+  border-radius: 0;
+}
+
+ul.tabs--primary {
+  display: inline-block;
+}
+
+footer.footer {
+  margin: 0 auto;
+  border: 0;
+  padding: 15px;
+  background: #fcfcfc;
+
+  .powered {
+    width: 100%;
+    font-size: 0.7em;
+    color: #ddd;
+    text-align: right;
+
+    a {
+      color: #aaa;
+    }
+  }
+}

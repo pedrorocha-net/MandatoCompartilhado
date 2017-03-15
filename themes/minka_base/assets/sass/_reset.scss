@@ -1,0 +1,8 @@
+.btn.btn-lg,
+.btn-group-lg > .btn,
+.btn-group-lg > .custom-file-control::before,
+.btn-lg.custom-file-control::before,
+.btn-group-lg .btn,
+.btn-group-lg .custom-file-control::before {
+  border-radius: 0;
+}

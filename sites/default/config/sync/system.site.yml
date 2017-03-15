@@ -1,0 +1,15 @@
+uuid: 68c00392-9ca9-419c-88aa-212824d5f237
+name: 'Micael Amarante 50444'
+mail: minka@athene.digital
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /ideias
+admin_compact_mode: false
+weight_select_max: 100
+langcode: pt-br
+default_langcode: pt-br
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
+mail_notification: ''
