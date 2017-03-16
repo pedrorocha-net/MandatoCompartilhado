@@ -4,8 +4,8 @@ description: 'Allows users to authenticate with their Facebook accounts.'
 package: Authentication
 # core: 8.x
 
-# Information added by Drupal.org packaging script on 2016-09-04
-version: '8.x-3.0-beta4'
+# Information added by Drupal.org packaging script on 2017-01-31
+version: '8.x-3.0'
 core: '8.x'
 project: 'simple_fb_connect'
-datestamp: 1472988840
+datestamp: 1485893677

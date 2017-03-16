@@ -19,6 +19,7 @@ services:
       - '@entity_field.manager'
       - '@token'
       - '@transliteration'
+      - '@language_manager'
 
   simple_fb_connect.post_login_manager:
     class: Drupal\simple_fb_connect\SimpleFbConnectPostLoginManager

@@ -77,4 +77,11 @@ class TestSimpleFbConnectUserManager extends SimpleFbConnectUserManager {
     return $file;
   }
 
+  /**
+   * Overrides drupalSetMessage.
+   */
+  protected function drupalSetMessage($message = NULL, $type = 'status', $repeat = FALSE) {
+    return NULL;
+  }
+
 }

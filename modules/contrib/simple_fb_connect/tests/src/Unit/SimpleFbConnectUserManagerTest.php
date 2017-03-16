@@ -19,6 +19,7 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
   protected $token;
   protected $transliteration;
   protected $userManager;
+  protected $languageManager;
 
   /**
    * {@inheritdoc}
@@ -62,6 +63,9 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
       ->disableOriginalConstructor()
       ->getMock();
 
+    $this->languageManager = $this->getMockBuilder('Drupal\Core\Language\LanguageManagerInterface')
+      ->getMock();
+
     // Note that we are creating an instance of TestSimpleFbConnectUserManager
     // instead of SimpleFbConnectUserManager. The test class overriders the
     // wrapper methods that call procedural Drupal functions.
@@ -73,7 +77,8 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
       $this->entityTypeManager,
       $this->entityFieldManager,
       $this->token,
-      $this->transliteration
+      $this->transliteration,
+      $this->languageManager
     );
   }
 
@@ -211,7 +216,12 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
       ->disableOriginalConstructor()
       ->getMock();
 
+    // Storage object that will be created in this test.
     $storage = $this->getMockBuilder('Drupal\Core\Entity\EntityStorageInterface')
+      ->getMock();
+
+    // Language object that will be created in this test.
+    $language = $this->getMockBuilder('Drupal\Core\Language\LanguageInterface')
       ->getMock();
 
     // Called when we're generating an unique username.
@@ -233,6 +243,18 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
       ->with('user')
       ->willReturn($storage);
 
+    // Called when current UI language is detected.
+    $language
+      ->expects($this->once())
+      ->method('getId')
+      ->willReturn('fi');
+
+    // LanguageManager that will return $language.
+    $this->languageManager
+      ->expects($this->once())
+      ->method('getCurrentLanguage')
+      ->willReturn($language);
+
     $logger_channel = $this->getMockBuilder('Drupal\Core\Logger\LoggerChannel')
       ->disableOriginalConstructor()
       ->getMock();
@@ -251,8 +273,10 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
    *
    * @covers ::generateUniqueUsername
    * @covers ::loadUserByProperty
+   *
+   * @dataProvider generateUniqueUsernameWithNoConflictsDataProvider
    */
-  public function testGenerateUniqueUsernameWithNoConflicts() {
+  public function testGenerateUniqueUsernameWithNoConflicts($fb_name, $expected) {
     $storage = $this->getMockBuilder('Drupal\Core\Entity\EntityStorageInterface')
       ->getMock();
 
@@ -267,7 +291,26 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
       ->with('user')
       ->willReturn($storage);
 
-    $this->assertEquals('Firstname Lastname', $this->userManager->subGenerateUniqueUsername('Firstname Lastname'));
+    $this->assertEquals($expected, $this->userManager->subGenerateUniqueUsername($fb_name));
+  }
+
+  /**
+   * Data provider for testGenerateUniqueUsernameWithNoConflicts().
+   *
+   * @return array
+   *   Nested arrays of values to check.
+   *
+   * @see ::testGenerateUniqueUsernameWithNoConflicts()
+   */
+  public function generateUniqueUsernameWithNoConflictsDataProvider() {
+    return array(
+      array('Firstname Lastname', 'Firstname Lastname'),
+      array('Space  Between', 'Space Between'),
+      array(' Leading Whitespace', 'Leading Whitespace'),
+      array('Trailing Whitespace ', 'Trailing Whitespace'),
+      array(' Whitespace  and Spaces ', 'Whitespace and Spaces'),
+      array('The length of this string is very long and it easily exceeds the maximum', 'The length of this string is very long and it easily exceeds'),
+    );
   }
 
   /**
@@ -275,8 +318,10 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
    *
    * @covers ::generateUniqueUsername
    * @covers ::loadUserByProperty
+   *
+   * @dataProvider generateUniqueUsernameWithConflictDataProvider
    */
-  public function testGenerateUniqueUsernameWithConflict() {
+  public function testGenerateUniqueUsernameWithConflict($fb_name, $expected) {
     $existing_user = $this->getMockBuilder('Drupal\user\Entity\User')
       ->disableOriginalConstructor()
       ->getMock();
@@ -289,6 +334,14 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
       ->method('loadByProperties')
       ->will($this->onConsecutiveCalls(
           array(1 => $existing_user),
+          array(2 => $existing_user),
+          array(3 => $existing_user),
+          array(4 => $existing_user),
+          array(5 => $existing_user),
+          array(6 => $existing_user),
+          array(7 => $existing_user),
+          array(8 => $existing_user),
+          array(9 => $existing_user),
           array()
         ));
 
@@ -298,7 +351,22 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
       ->with('user')
       ->willReturn($storage);
 
-    $this->assertEquals('Firstname Lastname 2', $this->userManager->subGenerateUniqueUsername('Firstname Lastname'));
+    $this->assertEquals($expected, $this->userManager->subGenerateUniqueUsername($fb_name));
+  }
+
+  /**
+   * Data provider for testGenerateUniqueUsernameWithConflict().
+   *
+   * @return array
+   *   Nested arrays of values to check.
+   *
+   * @see ::testGenerateUniqueUsernameWithConflict()
+   */
+  public function generateUniqueUsernameWithConflictDataProvider() {
+    return array(
+      array('Firstname Lastname', 'Firstname Lastname 10'),
+      array('The length of this string is very long and it easily exceeds the maximum', 'The length of this string is very long and it easily exce 10'),
+    );
   }
 
   /**
@@ -362,7 +430,6 @@ class SimpleFbConnectUserManagerTest extends UnitTestCase {
 
     $this->assertFalse($this->userManager->subDownloadProfilePic('http://www.example.com/picture.jpg', '1234'));
   }
-
 
   /**
    * Tests setProfilePic when target directory is writeable.

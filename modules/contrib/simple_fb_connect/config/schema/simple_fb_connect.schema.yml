@@ -13,6 +13,9 @@ simple_fb_connect.settings:
     app_secret:
       type: string
       label: 'App Secret'
+    api_version:
+      type: string
+      label: 'Graph API version'
     post_login_path:
       type: string
       label: 'Post login path'

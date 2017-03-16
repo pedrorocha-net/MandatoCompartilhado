@@ -2,14 +2,44 @@
 
 namespace Drupal\simple_fb_connect\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RequestContext;
 use Drupal\Component\Utility\SafeMarkup;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a form that configures Simple FB Connect settings.
  */
 class SimpleFbConnectSettingsForm extends ConfigFormBase {
+
+  protected $requestContext;
+
+  /**
+   * Constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The factory for configuration objects.
+   * @param \Drupal\Core\Routing\RequestContext $request_context
+   *   Holds information about the current request.
+   */
+  public function __construct(ConfigFactoryInterface $config_factory, RequestContext $request_context) {
+    $this->setConfigFactory($config_factory);
+    $this->requestContext = $request_context;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    // Instantiates this class.
+    return new static(
+      // Load the services required to construct this class.
+      $container->get('config.factory'),
+      $container->get('router.request_context')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -45,7 +75,7 @@ class SimpleFbConnectSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
       '#title' => $this->t('Application ID'),
       '#default_value' => $simple_fb_config->get('app_id'),
-      '#description' => $this->t('Copy the App ID of your Facebook App here'),
+      '#description' => $this->t('Copy the App ID of your Facebook App here. This value can be found from your App Dashboard.'),
     );
 
     $form['fb_settings']['app_secret'] = array(
@@ -53,14 +83,38 @@ class SimpleFbConnectSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
       '#title' => $this->t('App Secret'),
       '#default_value' => $simple_fb_config->get('app_secret'),
-      '#description' => $this->t('Copy the App Secret of your Facebook App here'),
+      '#description' => $this->t('Copy the App Secret of your Facebook App here. This value can be found from your App Dashboard.'),
+    );
+
+    $form['fb_settings']['api_version'] = array(
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#title' => $this->t('API Version'),
+      '#default_value' => $simple_fb_config->get('api_version'),
+      '#description' => $this->t('Copy the API Version of your Facebook App here. This value can be found from your App Dashboard. More information on API versions can be found at <a href="@facebook-changelog">Facebook Platform Changelog</a>.', array('@facebook-changelog' => 'https://developers.facebook.com/docs/apps/changelog')),
+    );
+
+    $form['fb_settings']['oauth_redirect_url'] = array(
+      '#type' => 'textfield',
+      '#disabled' => TRUE,
+      '#title' => $this->t('Valid OAuth redirect URIs'),
+      '#description' => $this->t('Copy this value to <em>Valid OAuth redirect URIs</em> field of your Facebook App settings.'),
+      '#default_value' => $GLOBALS['base_url'] . '/user/simple-fb-connect/return',
+    );
+
+    $form['fb_settings']['app_domains'] = array(
+      '#type' => 'textfield',
+      '#disabled' => TRUE,
+      '#title' => $this->t('App Domains'),
+      '#description' => $this->t('Copy this value to <em>App Domains</em> field of your Facebook App settings.'),
+      '#default_value' => $this->requestContext->getHost(),
     );
 
     $form['fb_settings']['site_url'] = array(
       '#type' => 'textfield',
       '#disabled' => TRUE,
       '#title' => $this->t('Site URL'),
-      '#description' => $this->t('Copy this value to <em>Site URL</em> and <em>Mobile Site URL</em> of your Facebook App settings.'),
+      '#description' => $this->t('Copy this value to <em>Site URL</em> field of your Facebook App settings.'),
       '#default_value' => $GLOBALS['base_url'],
     );
 
@@ -109,10 +163,19 @@ class SimpleFbConnectSettingsForm extends ConfigFormBase {
       '#default_value' => $simple_fb_config->get('disabled_roles'),
     );
     if (empty($roles)) {
-      $form['module_settings']['disabled_roles']['#description'] = t('No roles found.');
+      $form['module_settings']['disabled_roles']['#description'] = $this->t('No roles found.');
     }
 
     return parent::buildForm($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    if (!preg_match('/^v[2-9]\.[0-9]{1,2}$/', $form_state->getValue('api_version'))) {
+      $form_state->setErrorByName('api_version', $this->t('Invalid API version. The syntax for API version is for example <em>v2.8</em>'));
+    }
   }
 
   /**
@@ -123,6 +186,7 @@ class SimpleFbConnectSettingsForm extends ConfigFormBase {
     $this->config('simple_fb_connect.settings')
       ->set('app_id', $values['app_id'])
       ->set('app_secret', $values['app_secret'])
+      ->set('api_version', $values['api_version'])
       ->set('post_login_path', $values['post_login_path'])
       ->set('redirect_user_form', $values['redirect_user_form'])
       ->set('disable_admin_login', $values['disable_admin_login'])

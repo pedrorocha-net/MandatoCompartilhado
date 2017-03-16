@@ -5,6 +5,7 @@ namespace Drupal\simple_fb_connect;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -15,6 +16,7 @@ use Drupal\Core\Transliteration\PhpTransliteration;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Component\Utility\Unicode;
 
 /**
  * Contains all logic that is related to Drupal user management.
@@ -29,6 +31,7 @@ class SimpleFbConnectUserManager {
   protected $entityFieldManager;
   protected $token;
   protected $transliteration;
+  protected $languageManager;
 
   /**
    * Constructor.
@@ -49,8 +52,10 @@ class SimpleFbConnectUserManager {
    *   Used for token support in Drupal user picture directory.
    * @param \Drupal\Core\Transliteration\PhpTransliteration $transliteration
    *   Used for user picture directory and file transiliteration.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   Used for detecting the current UI language.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, LoggerChannelFactoryInterface $logger_factory, TranslationInterface $string_translation, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, Token $token, PhpTransliteration $transliteration) {
+  public function __construct(ConfigFactoryInterface $config_factory, LoggerChannelFactoryInterface $logger_factory, TranslationInterface $string_translation, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, Token $token, PhpTransliteration $transliteration, LanguageManagerInterface $language_manager) {
     $this->configFactory      = $config_factory;
     $this->loggerFactory      = $logger_factory;
     $this->stringTranslation  = $string_translation;
@@ -59,6 +64,7 @@ class SimpleFbConnectUserManager {
     $this->entityFieldManager = $entity_field_manager;
     $this->token              = $token;
     $this->transliteration    = $transliteration;
+    $this->languageManager    = $language_manager;
   }
 
   /**
@@ -128,18 +134,42 @@ class SimpleFbConnectUserManager {
     // Set up the user fields.
     // - Username will be user's name on Facebook.
     // - Password can be very long since the user doesn't see this.
+    // There are three different language fields.
+    // - preferred_language
+    // - preferred_admin_langcode
+    // - langcode of the user entity i.e. the language of the profile fields
+    // - We use the same logic as core and populate the current UI language to
+    //   all of these. Other modules can subscribe to the triggered event and
+    //   change the languages if they will.
+    // Get the current UI language.
+    $langcode = $this->languageManager->getCurrentLanguage()->getId();
+
     $fields = array(
       'name' => $this->generateUniqueUsername($name),
       'mail' => $email,
       'init' => $email,
       'pass' => $this->userPassword(32),
       'status' => $this->getNewUserStatus(),
+      'langcode' => $langcode,
+      'preferred_langcode' => $langcode,
+      'preferred_admin_langcode' => $langcode,
     );
 
     // Create new user account.
     $new_user = $this->entityTypeManager
       ->getStorage('user')
       ->create($fields);
+
+    // Validate the new user.
+    $violations = $new_user->validate();
+    if (count($violations) > 0) {
+      $msg = $violations[0]->getMessage();
+      $this->drupalSetMessage($this->t('Creation of user account failed: @message', array('@message' => $msg)), 'error');
+      $this->loggerFactory
+        ->get('simple_fb_connect')
+        ->error('Could not create new user: @message', array('@message' => $msg));
+      return FALSE;
+    }
 
     // Try to save the new user account.
     try {
@@ -252,13 +282,29 @@ class SimpleFbConnectUserManager {
    *   Unique username
    */
   protected function generateUniqueUsername($fb_name) {
-    $base = trim($fb_name);
+    // Truncate to max length. We use hard coded length because using
+    // USERNAME_MAX_LENGTH cause unit tests to fail.
+    $max_length = 60;
+    $fb_name = Unicode::substr($fb_name, 0, $max_length);
+
+    // Add a trailing number if needed to make username unique.
+    $base = $fb_name;
     $i = 1;
     $candidate = $base;
     while ($this->loadUserByProperty('name', $candidate)) {
       $i++;
+      // Calculate max length for $base and truncate if needed.
+      $max_length_base = $max_length - strlen((string) $i) - 1;
+      $base = Unicode::substr($base, 0, $max_length_base);
       $candidate = $base . " " . $i;
     }
+
+    // Trim leading and trailing whitespace.
+    $candidate = trim($candidate);
+
+    // Remove multiple spacebars from the username if needed.
+    $candidate = preg_replace('/ {2,}/', ' ', $candidate);
+
     return $candidate;
   }
 
@@ -325,11 +371,14 @@ class SimpleFbConnectUserManager {
       ->get('simple_fb_connect.settings')
       ->get('disabled_roles');
 
+    // Filter out allowed roles. Allowed roles have have value "0".
+    // "0" evaluates to FALSE so second parameter of array_filter is omitted.
+    $disabled_roles = array_filter($disabled_roles);
+
     // Loop through all roles the user has.
     foreach ($drupal_user->getRoles() as $role) {
       // Check if FB login is disabled for this role.
-      // Disabled roles have non-zero value.
-      if (array_key_exists($role, $disabled_roles) && ($disabled_roles[$role] !== 0)) {
+      if (array_key_exists($role, $disabled_roles)) {
         $this->loggerFactory
           ->get('simple_fb_connect')
           ->warning('Facebook login for user @user prevented. Facebook login for role @role is disabled in module settings.', array('@user' => $drupal_user->getAccountName(), '@role' => $role));
@@ -359,6 +408,11 @@ class SimpleFbConnectUserManager {
     // Try to download the profile picture and add it to user fields.
     if ($this->userPictureEnabled()) {
       if ($file = $this->downloadProfilePic($picture_url, $fbid)) {
+        // Set the owner of the file to be the Drupal user.
+        $file->setOwner($drupal_user);
+        $file->save();
+
+        // Set user's profile picture and save user.
         $drupal_user->set('user_picture', $file->id());
         $drupal_user->save();
         return TRUE;

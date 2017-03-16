@@ -108,7 +108,6 @@ class SimpleFbConnectPostLoginManagerTest extends UnitTestCase {
     $this->assertEquals($query_path, $this->postLoginManager->getPostLoginPath());
   }
 
-
   /**
    * Tests getPostLoginPath method with invalid query parameter.
    *

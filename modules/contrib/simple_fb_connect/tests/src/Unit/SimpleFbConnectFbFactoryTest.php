@@ -87,7 +87,7 @@ class SimpleFbConnectFbFactoryTest extends UnitTestCase {
     $this->assertFalse($this->fbFactory->getFbService());
   }
 
-    /**
+  /**
    * Data provider for testLoginUser().
    *
    * @return array

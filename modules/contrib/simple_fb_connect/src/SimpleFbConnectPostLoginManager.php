@@ -5,7 +5,6 @@ namespace Drupal\simple_fb_connect;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\RequestContext;
 use Drupal\Core\Path\PathValidatorInterface;
-use Drupal\simple_fb_connect\SimpleFbConnectPersistentDataHandler;
 use Drupal\user\Entity\User;
 
 /**

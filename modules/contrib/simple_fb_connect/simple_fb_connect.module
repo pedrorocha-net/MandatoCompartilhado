@@ -2,7 +2,7 @@
 
 /**
  * @file
- *   Hook implementations for Simple FB Connect module.
+ *  Hook implementations for Simple FB Connect module.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -18,6 +18,6 @@ function simple_fb_connect_help($route_name, RouteMatchInterface $route_match) {
       $output .= t('Configuration instructions and other useful documentation can be found from <a href="@handbook-url">Simple FB Connect Handbook</a>.', array('@handbook-url' => 'https://www.drupal.org/node/2474731'));
       $output .='</p>';
       return $output;
-      break;
+    break;
   }
 }
